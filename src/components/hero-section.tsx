@@ -1,41 +1,15 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Palette, Rocket, Zap } from "lucide-react"
+import Link from "next/link"
 
-import type { Page } from '@/payload-types'
-
-import { CMSLink } from '@/components/Link'
-import { Media } from '@/components/Media'
-import RichText from '@/components/RichText'
-import { Button } from '@/components/ui/button'
-import { Zap, Link, ArrowRight, Palette, Rocket } from 'lucide-react'
-
-export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
-  const { setHeaderTheme } = useHeaderTheme()
-
-  useEffect(() => {
-    setHeaderTheme('dark')
-  })
-
+export function HeroSection() {
   return (
-    <div className="relative -mt-16 flex items-center justify-center text-white">
-      {/* <div className="container mb-8 z-10 relative flex items-center justify-center">
-        <div className="max-w-146 md:text-center">
-          {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex md:justify-center gap-4">
-              {links.map(({ link, id }) => {
-                return (
-                  <li key={id}>
-                    <CMSLink {...link} />
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
-      </div> */}
-      <div className="container-standard section-padding z-10 relative">
+    <section className="relative bg-gradient-to-br from-background via-card to-muted section-padding overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/abstract-geometric-pattern-light-orange.png')] opacity-5"></div>
+      <div className="absolute top-20 right-20 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+
+      <div className="container-standard relative">
         <div className="text-center">
           <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in-up">
             <Zap className="h-4 w-4" />
@@ -51,8 +25,8 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed animate-fade-in-up animation-delay-200 max-w-3xl mx-auto">
-            We craft compelling digital experiences that drive real results. From strategic
-            campaigns to creative solutions, we turn your vision into measurable success.
+            We craft compelling digital experiences that drive real results. From strategic campaigns to creative
+            solutions, we turn your vision into measurable success.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
@@ -110,11 +84,6 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           </div>
         </div>
       </div>
-      <div className="min-h-screen select-none">
-        {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
-        )}
-      </div>
-    </div>
+    </section>
   )
 }

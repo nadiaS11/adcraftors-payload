@@ -1,28 +1,27 @@
-'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React, { useState } from 'react'
-import type { Header } from '@/payload-types'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/utilities/ui'
-import { Settings, X, Menu } from 'lucide-react'
+"use client"
 
-interface HeaderClientProps {
-  data: Header
-}
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import { Menu, X, Settings } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
-  /* Storing the value in a useState to avoid hydration errors */
-  const [theme, setTheme] = useState<string | null>(null)
-  const { headerTheme, setHeaderTheme } = useHeaderTheme()
+const navigationItems = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
+  { href: "/case-studies", label: "Case Studies" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+]
+
+export function Navigation() {
+  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
-  const [isOpen, setIsOpen] = useState(false)
-
   const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === '/'
+    if (href === "/") {
+      return pathname === "/"
     }
     return pathname.startsWith(href)
   }
@@ -32,10 +31,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       <div className="container-full">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link
-              href="/"
-              className="text-2xl font-serif font-bold text-primary hover:text-accent transition-colors"
-            >
+            <Link href="/" className="text-2xl font-serif font-bold text-primary hover:text-accent transition-colors">
               AdCraftors
             </Link>
           </div>
@@ -43,19 +39,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {data?.navItems?.map(({ link, id }) => (
+              {navigationItems.map((item) => (
                 <Link
-                  key={id}
-                  href={`${link.href}`}
+                  key={item.href}
+                  href={item.href}
                   className={cn(
-                    'transition-colors duration-200 relative py-2',
-                    isActive(link.href)
-                      ? 'text-primary font-medium'
-                      : 'text-foreground hover:text-primary',
+                    "transition-colors duration-200 relative py-2",
+                    isActive(item.href) ? "text-primary font-medium" : "text-foreground hover:text-primary",
                   )}
                 >
-                  {link.label}
-                  {isActive(link.href) && (
+                  {item.label}
+                  {isActive(item.href) && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
                   )}
                 </Link>
@@ -70,15 +64,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 Admin
               </Link>
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Get Started
-            </Button>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Get Started</Button>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
-              type="button"
               onClick={() => setIsOpen(!isOpen)}
               className="text-foreground hover:text-accent transition-colors duration-200"
               aria-label="Toggle navigation menu"
@@ -92,19 +83,19 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-border">
-              {data?.navItems?.map(({ link, id }) => (
+              {navigationItems.map((item) => (
                 <Link
-                  key={id}
-                  href={`${link.href}`}
+                  key={item.href}
+                  href={item.href}
                   className={cn(
-                    'block px-3 py-2 transition-colors duration-200',
-                    isActive(link.href)
-                      ? 'text-primary font-medium bg-primary/10 rounded-md'
-                      : 'text-foreground hover:text-primary hover:bg-primary/5 rounded-md',
+                    "block px-3 py-2 transition-colors duration-200",
+                    isActive(item.href)
+                      ? "text-primary font-medium bg-primary/10 rounded-md"
+                      : "text-foreground hover:text-primary hover:bg-primary/5 rounded-md",
                   )}
                   onClick={() => setIsOpen(false)}
                 >
-                  {link.label}
+                  {item.label}
                 </Link>
               ))}
               <Link
@@ -116,9 +107,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 Admin
               </Link>
               <div className="px-3 py-2">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                  Get Started
-                </Button>
+                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">Get Started</Button>
               </div>
             </div>
           </div>
