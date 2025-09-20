@@ -1,18 +1,18 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { Menu, X, Settings } from "lucide-react"
-import { cn } from "@/lib/utils"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { Menu, X, Settings } from 'lucide-react'
+import { cn } from '@/utilities/ui'
 
 const navigationItems = [
-  { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-  { href: "/case-studies", label: "Case Studies" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/case-studies', label: 'Case Studies' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export function Navigation() {
@@ -20,8 +20,8 @@ export function Navigation() {
   const pathname = usePathname()
 
   const isActive = (href: string) => {
-    if (href === "/") {
-      return pathname === "/"
+    if (href === '/') {
+      return pathname === '/'
     }
     return pathname.startsWith(href)
   }
@@ -31,7 +31,10 @@ export function Navigation() {
       <div className="container-full">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-serif font-bold text-primary hover:text-accent transition-colors">
+            <Link
+              href="/"
+              className="text-2xl font-serif font-bold text-primary hover:text-accent transition-colors"
+            >
               AdCraftors
             </Link>
           </div>
@@ -44,8 +47,10 @@ export function Navigation() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "transition-colors duration-200 relative py-2",
-                    isActive(item.href) ? "text-primary font-medium" : "text-foreground hover:text-primary",
+                    'transition-colors duration-200 relative py-2',
+                    isActive(item.href)
+                      ? 'text-primary font-medium'
+                      : 'text-foreground hover:text-primary',
                   )}
                 >
                   {item.label}
@@ -64,7 +69,9 @@ export function Navigation() {
                 Admin
               </Link>
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Get Started</Button>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              Get Started
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -88,10 +95,10 @@ export function Navigation() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "block px-3 py-2 transition-colors duration-200",
+                    'block px-3 py-2 transition-colors duration-200',
                     isActive(item.href)
-                      ? "text-primary font-medium bg-primary/10 rounded-md"
-                      : "text-foreground hover:text-primary hover:bg-primary/5 rounded-md",
+                      ? 'text-primary font-medium bg-primary/10 rounded-md'
+                      : 'text-foreground hover:text-primary hover:bg-primary/5 rounded-md',
                   )}
                   onClick={() => setIsOpen(false)}
                 >
@@ -107,7 +114,9 @@ export function Navigation() {
                 Admin
               </Link>
               <div className="px-3 py-2">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">Get Started</Button>
+                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                  Get Started
+                </Button>
               </div>
             </div>
           </div>
