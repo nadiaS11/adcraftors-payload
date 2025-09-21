@@ -72,6 +72,8 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    conversations: Conversation;
+    messages: Message;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -88,6 +90,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    conversations: ConversationsSelect<false> | ConversationsSelect<true>;
+    messages: MessagesSelect<false> | MessagesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -736,6 +740,92 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conversations".
+ */
+export interface Conversation {
+  id: number;
+  /**
+   * Email address of the user who started the conversation
+   */
+  user_email: string;
+  /**
+   * Optional name of the user
+   */
+  user_name?: string | null;
+  status: 'active' | 'resolved' | 'closed';
+  /**
+   * Admin user assigned to handle this conversation
+   */
+  assigned_to?: (number | null) | User;
+  /**
+   * Timestamp of the last message in this conversation
+   */
+  last_message_at?: string | null;
+  /**
+   * Additional metadata like user agent, IP, etc.
+   */
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages".
+ */
+export interface Message {
+  id: number;
+  /**
+   * The conversation this message belongs to
+   */
+  conversation: number | Conversation;
+  /**
+   * The message content
+   */
+  content: string;
+  /**
+   * Who sent this message
+   */
+  sender_type: 'user' | 'agent';
+  /**
+   * Name of the sender (for user messages)
+   */
+  sender_name?: string | null;
+  /**
+   * Admin user who sent this message (for agent messages)
+   */
+  sender_user?: (number | null) | User;
+  /**
+   * Whether this message has been read
+   */
+  is_read?: boolean | null;
+  /**
+   * Type of message
+   */
+  message_type?: ('text' | 'system' | 'file') | null;
+  /**
+   * File attachments for this message
+   */
+  attachments?:
+    | {
+        file?: (number | null) | Media;
+        filename?: string | null;
+        size?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -926,6 +1016,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'conversations';
+        value: number | Conversation;
+      } | null)
+    | ({
+        relationTo: 'messages';
+        value: number | Message;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1290,6 +1388,43 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conversations_select".
+ */
+export interface ConversationsSelect<T extends boolean = true> {
+  user_email?: T;
+  user_name?: T;
+  status?: T;
+  assigned_to?: T;
+  last_message_at?: T;
+  metadata?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages_select".
+ */
+export interface MessagesSelect<T extends boolean = true> {
+  conversation?: T;
+  content?: T;
+  sender_type?: T;
+  sender_name?: T;
+  sender_user?: T;
+  is_read?: T;
+  message_type?: T;
+  attachments?:
+    | T
+    | {
+        file?: T;
+        filename?: T;
+        size?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

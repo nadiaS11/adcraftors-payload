@@ -6,12 +6,17 @@ import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
-
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+
+import { HeroSection } from '@/components/hero-section'
+import { TestimonialsSection } from '@/components/testimonials-section'
+import { CaseStudiesPreview } from '@/components/case-studies-preview'
+import { FeaturesSection } from '@/components/features-section'
+import { CTASection } from '@/components/cta-section'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -74,6 +79,10 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
+      <TestimonialsSection />
+      <CaseStudiesPreview />
+      <FeaturesSection />
+      <CTASection />
       <RenderBlocks blocks={layout} />
     </>
   )

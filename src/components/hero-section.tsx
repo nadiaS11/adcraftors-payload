@@ -52,7 +52,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center animate-fade-in-up animation-delay-600 group">
             <div className="bg-primary/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
               <Palette className="h-10 w-10 text-primary group-hover:text-primary-foreground" />
@@ -82,7 +82,7 @@ export function HeroSection() {
               Results-focused campaigns that deliver measurable business impact
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

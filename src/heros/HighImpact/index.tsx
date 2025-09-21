@@ -8,7 +8,9 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
-import { Zap, Link, ArrowRight, Palette, Rocket } from 'lucide-react'
+import Link from 'next/link'
+import { Zap, ArrowRight, Palette, Rocket } from 'lucide-react'
+import { HeroSection } from '@/components/hero-section'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   const { setHeaderTheme } = useHeaderTheme()
@@ -18,24 +20,12 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
   })
 
   return (
-    <div className="relative -mt-16 flex items-center justify-center text-white">
-      {/* <div className="container mb-8 z-10 relative flex items-center justify-center">
-        <div className="max-w-146 md:text-center">
-          {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className="flex md:justify-center gap-4">
-              {links.map(({ link, id }) => {
-                return (
-                  <li key={id}>
-                    <CMSLink {...link} />
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
-      </div> */}
-      <div className="container-standard section-padding z-10 relative">
+    <section className="relative bg-gradient-to-br from-background via-card to-muted section-padding overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/abstract-geometric-pattern-light-orange.png')] opacity-50"></div>
+      <div className="absolute top-20 right-20 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+
+      <div className="container-standard relative">
         <div className="text-center">
           <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in-up">
             <Zap className="h-4 w-4" />
@@ -56,11 +46,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground group px-8 py-4 text-lg"
-              asChild
-            >
+            <Button size="lg" className="" asChild>
               <Link href="/contact">
                 Start Your Project
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -70,8 +56,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
             <Button
               size="lg"
               variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent px-8 py-4 text-lg"
-              asChild
+               asChild
             >
               <Link href="/case-studies">View Our Work</Link>
             </Button>
@@ -84,9 +69,6 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
               <Palette className="h-10 w-10 text-primary group-hover:text-primary-foreground" />
             </div>
             <h3 className="font-serif font-semibold text-xl mb-3">Creative Design</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Stunning visuals that capture attention and convert visitors into customers
-            </p>
           </div>
 
           <div className="text-center animate-fade-in-up animation-delay-700 group">
@@ -94,9 +76,6 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
               <Rocket className="h-10 w-10 text-primary group-hover:text-primary-foreground" />
             </div>
             <h3 className="font-serif font-semibold text-xl mb-3">Digital Strategy</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Data-driven strategies that accelerate growth and maximize ROI
-            </p>
           </div>
 
           <div className="text-center animate-fade-in-up animation-delay-800 group">
@@ -104,17 +83,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
               <Zap className="h-10 w-10 text-primary group-hover:text-primary-foreground" />
             </div>
             <h3 className="font-serif font-semibold text-xl mb-3">Performance Marketing</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Results-focused campaigns that deliver measurable business impact
-            </p>
           </div>
         </div>
       </div>
-      <div className="min-h-screen select-none">
-        {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
-        )}
-      </div>
-    </div>
+    </section>
   )
 }

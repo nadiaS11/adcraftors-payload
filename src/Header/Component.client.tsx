@@ -7,6 +7,7 @@ import type { Header } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import { Settings, X, Menu } from 'lucide-react'
+import { CMSLink } from '@/components/Link'
 
 interface HeaderClientProps {
   data: Header
@@ -17,7 +18,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
-
+  const navigationItems = data.navItems
   const [isOpen, setIsOpen] = useState(false)
 
   const isActive = (href: string) => {
@@ -43,22 +44,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {data?.navItems?.map(({ link, id }) => (
-                <Link
+              {navigationItems?.map(({ link, id }) => (
+                <CMSLink
                   key={id}
-                  href={`${link.href}`}
                   className={cn(
                     'transition-colors duration-200 relative py-2',
-                    isActive(link.href)
+                    isActive(`${link?.url}`)
                       ? 'text-primary font-medium'
                       : 'text-foreground hover:text-primary',
                   )}
+                  appearance={'inline'}
+                  {...link}
                 >
-                  {link.label}
-                  {isActive(link.href) && (
+                  {isActive(`${link?.url}`) && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
                   )}
-                </Link>
+                </CMSLink>
               ))}
             </div>
           </div>
@@ -91,21 +92,21 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-border">
-              {data?.navItems?.map(({ link, id }) => (
-                <Link
-                  key={id}
-                  href={`${link.href}`}
-                  className={cn(
-                    'block px-3 py-2 transition-colors duration-200',
-                    isActive(link.href)
-                      ? 'text-primary font-medium bg-primary/10 rounded-md'
-                      : 'text-foreground hover:text-primary hover:bg-primary/5 rounded-md',
-                  )}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </Link>
+            <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-border">
+              {navigationItems?.map(({ link, id }) => (
+                // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+                <li key={id} onClick={() => setIsOpen(false)}>
+                  <CMSLink
+                    className={cn(
+                      'block px-3 py-2 transition-colors duration-200',
+                      isActive(`${link?.url}`)
+                        ? 'text-primary font-medium bg-primary/10 rounded-md'
+                        : 'text-foreground hover:text-primary hover:bg-primary/5 rounded-md',
+                    )}
+                    {...link}
+                    appearance={'inline'}
+                  />
+                </li>
               ))}
               <Link
                 href="/auth/login"
@@ -120,7 +121,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                   Get Started
                 </Button>
               </div>
-            </div>
+            </ul>
           </div>
         )}
       </div>
